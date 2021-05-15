@@ -1,4 +1,4 @@
-package model;
+package pig.model;
 
 import lombok.Data;
 

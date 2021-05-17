@@ -1,9 +1,11 @@
 package pig.model;
 
 import lombok.Data;
+import org.tinylog.Logger;
+
 
 /**
- * Ez az osztaly reprezentalja a kockat, amellyel jatszani fogunk.
+ * Ez az osztaly reprezentálja a kockát, amellyel játszani fogunk.
  * */
 @Data
 public class Die {
@@ -14,7 +16,7 @@ public class Die {
 
     // Constructors
     /**
-     * Bealitjuk a sides es a top valtozo alapertekit.
+     * Beálítjuk a sides és a top változó alapértékeit.
      * */
     public Die(){
         sides = 6;
@@ -41,7 +43,7 @@ public class Die {
      */
     public void roll(){
         top = 1 + (int)(Math.random() * sides);
+        Logger.debug("A dobot szám: " + top);
     }
-
 
 }

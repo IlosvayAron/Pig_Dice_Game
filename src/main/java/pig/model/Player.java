@@ -1,6 +1,7 @@
 package pig.model;
 
 import lombok.Data;
+import org.tinylog.Logger;
 
 /**
  * Ez az osztály fogja azon informáciokat tárolni, hogy a játékosnak, mennyi pontja van a jelenlegi körben
@@ -21,6 +22,7 @@ public class Player {
         this.name = name;
         turnScore = 0;
         totalScore = 0;
+        Logger.info(name + " kezdeti állapota: TurnScore = " + turnScore + ", TotalScore = " + totalScore);
     }
 
     /**
@@ -28,6 +30,7 @@ public class Player {
      */
     public void resetTurnScore(){
         turnScore = 0;
+        Logger.debug("A turnScore értéke nullázva let!");
     }
 
     /**
@@ -37,6 +40,7 @@ public class Player {
      */
     public void updateTurn(int roll){
         turnScore += roll;
+        Logger.debug("Aktuális pontszám:" + turnScore);
     }
 
     /**
@@ -45,6 +49,7 @@ public class Player {
      */
     public void saveScore(){
         totalScore += turnScore;
+        Logger.debug("Elmentett pontszám:" + totalScore);
         resetTurnScore();
     }
 }

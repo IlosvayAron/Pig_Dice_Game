@@ -1,6 +1,7 @@
 package pig.model;
 
 import lombok.Data;
+import org.tinylog.Logger;
 
 /**
  * Ez az osztály reprezentálja a játék menetét.
@@ -27,6 +28,7 @@ public class Game {
         playerOne = new Player(playerOneName);
         playerTwo = new Player(playerTwoName);
         currentPlayer = playerOne;
+        Logger.info("Kezdőjátékos:" + currentPlayer);
     }
 
     /**
@@ -51,8 +53,10 @@ public class Game {
      public void switchTurn(){
         if (playerOneTurn()) {
             currentPlayer = playerTwo;
+            Logger.info("Jelenlegi játékos: " + currentPlayer);
         } else {
             currentPlayer = playerOne;
+            Logger.info("Jelenlegi játékos: " + currentPlayer);
         }
      }
 
@@ -65,6 +69,7 @@ public class Game {
         int top = die.getTop();
         currentPlayer.updateTurn(top);
         if (top == 1){
+            Logger.info("Következő játékos jön!");
             currentPlayer.resetTurnScore();
             switchTurn();
         }

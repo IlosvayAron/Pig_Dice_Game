@@ -1,7 +1,12 @@
 package pig.controller;
 
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,7 +16,10 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import pig.model.Game;
+
+import java.io.IOException;
 
 public class PigController {
 
@@ -27,6 +35,9 @@ public class PigController {
 
     @FXML
     Button holdButton;
+
+    @FXML
+    Button resultsButton;
 
     @FXML
     TextField playerOneTurn;
@@ -81,7 +92,6 @@ public class PigController {
     public void initialize(){
         clock = new Roller();
         pig = new Game("Player 1", "Player 2");
-        System.out.println("The Game started!");
         updateViews();
     }
 
@@ -111,6 +121,7 @@ public class PigController {
     public void disableButtons(boolean disable){
         rollButton.setDisable(disable);
         holdButton.setDisable(disable);
+        resultsButton.setDisable(disable);
     }
 
     public void rollAnimation(){
@@ -126,5 +137,13 @@ public class PigController {
     public void hold(){
         pig.hold();
         updateViews();
+    }
+
+    @FXML
+    private void switchScene(ActionEvent event) throws IOException {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/results.fxml"));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

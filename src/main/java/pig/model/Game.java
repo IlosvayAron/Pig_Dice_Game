@@ -9,7 +9,7 @@ import org.tinylog.Logger;
 @Data
 public class Game {
 
-    public static final int MAX_SCORE = 50;
+    public static final int MAX_SCORE = 20;
 
     // Data Fields
     private Die die;

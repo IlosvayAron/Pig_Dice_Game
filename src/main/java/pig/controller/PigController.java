@@ -1,5 +1,7 @@
 package pig.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +20,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pig.model.Game;
+import pig.model.Player;
+import pig.model.PlayerHelper;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class PigController {
@@ -109,7 +114,17 @@ public class PigController {
             playerOneBox.setBackground(null);
         }
         if (pig.gameOver()){
+            var objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+            var winner_player = new PlayerHelper(pig.getCurrentPlayer().getName(),pig.getCurrentPlayer().getTotalScore());
+            //winner_player.setPlayer_name(pig.getCurrentPlayer().getName());
+            //winner_player.setTotalScore(pig.getCurrentPlayer().getTotalScore());
+            try (var writer = new FileWriter("winner.json")) {
+                objectMapper.writeValue(writer, winner_player);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             disableButtons(true);
+            disableResultButton(false);
             title.setText("Game Over! " + pig.getCurrentPlayer().getName() + " wins!");
         }
     }
@@ -121,12 +136,16 @@ public class PigController {
     public void disableButtons(boolean disable){
         rollButton.setDisable(disable);
         holdButton.setDisable(disable);
+    }
+
+    public void disableResultButton(boolean disable){
         resultsButton.setDisable(disable);
     }
 
     public void rollAnimation(){
         clock.start();
         disableButtons(true);
+        disableResultButton(true);
     }
 
     public void roll(){
